@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About EcoFinds</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4fcf7;
+      margin: 0;
+      padding: 0;
+      color: #2a2a2a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Navbar styling identical to homepage with brand aligned left and nav items right */
+    .navbar {
+      background-color: #40916c !important;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+      padding: 0.75rem 2rem;
+    }
+    .navbar-brand {
+      font-weight: 700;
+      color: #fff !important;
+      font-size: 1.8rem;
+      user-select: none;
+      letter-spacing: 1.5px;
+      font-family: Arial, sans-serif;
+      text-decoration: none;
+      margin-right: auto;
+    }
+    .nav-button {
+      margin-left: 1rem;
+      padding: 8px 20px;
+      font-weight: 600;
+      color: #fff;
+      background: transparent;
+      border: none;
+      text-decoration: none;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      user-select: none;
+    }
+    .nav-button:hover {
+      color: #d4f1be;
+      text-decoration: underline;
+    }
+    .d-flex.ms-auto {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+    /* Content styling to match homepage vibe */
+    .content-container {
+      max-width: 850px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(64,145,108,0.15);
+      margin: 2rem auto 4rem auto;
+      padding: 40px 50px;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #2a2a2a;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    h1 {
+      color: #40916c;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      font-family: 'Georgia', serif;
+      text-align: center;
+      user-select: none;
+    }
+    h2 {
+      color: #2e7d32;
+      font-family: 'Georgia', serif;
+      margin-top: 2.5rem;
+      margin-bottom: 0.75rem;
+      border-bottom: 2px solid #a5d6a7;
+      padding-bottom: 8px;
+      user-select: none;
+    }
+    strong {
+      color: #2e7d32;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem 0;
+      color: #777;
+      margin-top: auto;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+    @media (max-width: 768px) {
+      .content-container {
+        margin: 1.5rem 1rem 3rem 1rem;
+        padding: 30px 25px;
+        font-size: 1rem;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+      h2 {
+        font-size: 1.3rem;
+      }
+      .nav-button {
+        margin-left: 0.75rem;
+        font-size: 0.9rem;
+        padding: 6px 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid px-0">
+      <a class="navbar-brand" href="/">EcoFinds</a>
+      <div class="d-flex ms-auto">
+        <a href="/marketplace" class="nav-button">Marketplace</a>
+        <a href="/about" class="nav-button">About</a>
+        <a href="/login" class="nav-button">Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="content-container" role="main">
+    <h1>About Ecofinds</h1>
+    <p>
+      <strong>Ecofinds</strong> empowers smarter, greener choices by making it easy to buy and sell sustainable second-hand items. Our mission is simple: extend the life of everyday goods, reduce waste, and build a thriving community focused on conscious consumption. At Ecofinds, every transaction is a step toward minimizing our collective environmental footprint while helping users discover affordable, unique, and quality pre-loved finds.
+    </p>
+    <h2>Why ECOFINDS?</h2>
+    <p>
+      The traditional cycle of buying new—consume, discard, repeat—is unsustainable for both people and the planet. The production of a single cotton t-shirt, for instance, can require thousands of liters of water, contributing to resource depletion and pollution. By choosing second-hand, users help conserve precious resources, keep items out of landfills, and reduce the demand for new goods—and all without compromising on quality or style.
+    </p>
+    <h2>Our VISION:</h2>
+    <p>
+      Ecofinds strives to redefine what it means to shop sustainably. By supporting a cycle of reuse and thoughtful consumption, our marketplace connects eco-conscious buyers and sellers, champions a circular economy, and proves that sustainability can be stylish, practical, and accessible.
+    </p>
+  </div>
+
+  <footer>
+    &copy; 2025 EcoFinds. All rights reserved.
+  </footer>
+</body>
+</html>

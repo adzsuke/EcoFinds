@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EcoFinds Login & Signup</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #a8e6cf, #dcedc1);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      background-image: url('https://www.transparenttextures.com/patterns/green-fibers.png');
+      background-repeat: repeat;
+    }
+    /* Navbar styling same as homepage */
+    .navbar {
+      background-color: #40916c !important;
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 2rem;
+      color: white;
+      font-family: Arial, sans-serif;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    }
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: 1.5px;
+      color: white;
+      text-decoration: none;
+      flex-grow: 1;
+      user-select: none;
+    }
+    .nav-button {
+      margin-left: 1rem;
+      padding: 8px 20px;
+      font-weight: 600;
+      color: #fff;
+      background: transparent;
+      border: none;
+      text-decoration: none;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      user-select: none;
+    }
+    .nav-button:hover {
+      color: #d4f1be;
+      text-decoration: underline;
+    }
+    /* Container and form styles */
+    .container {
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      width: 400px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      box-sizing: border-box;
+      margin: 4rem auto 2rem auto;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    h2 {
+      color: #40916c; /* changed to navbar green */
+      margin-bottom: 24px;
+      font-weight: 700;
+      user-select: none;
+    }
+    label {
+      display: block;
+      text-align: left;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #40916c; /* changed to navbar green */
+      user-select: none;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 2px solid #74b174; /* adjusted to harmonize with navbar green */
+      border-radius: 6px;
+      font-size: 16px;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    input[type="number"]:focus {
+      border-color: #40916c; /* focus border matches navbar green */
+      outline: none;
+    }
+    .link {
+      color: #40916c; /* changed to navbar green */
+      cursor: pointer;
+      text-decoration: underline;
+      margin-top: -15px;
+      margin-bottom: 15px;
+      display: inline-block;
+      user-select: none;
+    }
+    button.login-btn, button.signup-btn {
+      background-color: #40916c; /* navbar green */
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    button.login-btn:hover, button.signup-btn:hover {
+      background-color: #327351; /* slightly darkened navbar green for hover */
+    }
+    #googleSignInButton {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script>
+    function decodeJWT(token) {
+      let base64Url = token.split('.')[1];
+      let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      let jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split('')
+          .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+          .join('')
+      );
+      return JSON.parse(jsonPayload);
+    }
+    function handleCredentialResponse(response) {
+      const user = decodeJWT(response.credential);
+      document.getElementById('email-login').value = user.email || '';
+      console.log('User info:', user);
+      alert('Google Sign-In successful for: ' + user.name);
+    }
+    function switchToSignup() {
+      document.getElementById('login-form').classList.add('hidden');
+      document.getElementById('signup-form').classList.remove('hidden');
+      document.getElementById('otp-form').classList.add('hidden');
+      document.getElementById('heading').innerText = 'Create New Account';
+    }
+    function switchToLogin() {
+      document.getElementById('login-form').classList.remove('hidden');
+      document.getElementById('signup-form').classList.add('hidden');
+      document.getElementById('otp-form').classList.add('hidden');
+      document.getElementById('heading').innerText = 'Sign in to EcoFinds';
+    }
+    function forgotPassword() {
+      document.getElementById('login-form').classList.add('hidden');
+      document.getElementById('signup-form').classList.add('hidden');
+      document.getElementById('otp-form').classList.remove('hidden');
+      document.getElementById('heading').innerText = 'Password Recovery';
+    }
+    function sendOtp() {
+      const email = document.getElementById('email-otp').value;
+      if (!email) {
+        alert('Please enter your email to receive OTP.');
+        return;
+      }
+      alert('OTP link sent to ' + email + '. (Backend API needed for real email sending)');
+    }
+    function verifyOtp() {
+      const otp = document.getElementById('otp-input').value;
+      if (!otp) {
+        alert('Please enter the OTP you received.');
+        return;
+      }
+      alert('OTP verified! You can now reset your password. (Backend API needed)');
+    }
+    window.onload = function() {
+      google.accounts.id.initialize({
+        client_id: 'YOUR_GOOGLE_CLIENT_ID_HERE',
+        callback: handleCredentialResponse
+      });
+      google.accounts.id.renderButton(
+        document.getElementById('googleSignInButton'), {
+          theme: 'outline',
+          size: 'large'
+        }
+      );
+      google.accounts.id.prompt();
+    };
+  </script>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="navbar-brand">EcoFinds</a>
+    <a href="/marketplace" class="nav-button">MARKETPLACE</a>
+    <a href="/about" class="nav-button">ABOUT</a>
+    <a href="/login" class="nav-button">LOGIN</a>
+  </nav>
+
+  <div class="container">
+    <h2 id="heading">Sign in to EcoFinds</h2>
+    <!-- Login form -->
+    <form id="login-form">
+      <label for="email-login">Email:</label>
+      <input type="email" id="email-login" name="email-login" placeholder="Enter your email" required />
+      <label for="password-login">Password:</label>
+      <input type="password" id="password-login" name="password-login" placeholder="Enter your password" required />
+      <div class="link" onclick="forgotPassword()">Forgot Password?</div>
+      <button type="submit" class="login-btn">Login</button>
+    </form>
+    <!-- OTP recovery form -->
+    <form id="otp-form" class="hidden" onsubmit="event.preventDefault(); verifyOtp();">
+      <label for="email-otp">Enter your email to get OTP:</label>
+      <input type="email" id="email-otp" placeholder="Email address" required />
+      <button type="button" onclick="sendOtp()">Send OTP</button>
+      <label for="otp-input">Enter OTP:</label>
+      <input type="number" id="otp-input" placeholder="6-digit OTP" />
+      <button type="submit">Verify OTP</button>
+      <div class="link" onclick="switchToLogin()">Back to Login</div>
+    </form>
+    <!-- Signup form -->
+    <form id="signup-form" class="hidden">
+      <label for="name-signup">Name:</label>
+      <input type="text" id="name-signup" placeholder="Enter your name" required />
+      <label for="email-signup">Email:</label>
+      <input type="email" id="email-signup" placeholder="Enter your email" required />
+      <label for="password-signup">Password:</label>
+      <input type="password" id="password-signup" placeholder="Create a password" required />
+      <button type="submit" class="signup-btn">Create Account</button>
+      <div class="link" onclick="switchToLogin()">Back to Login</div>
+    </form>
+    <button onclick="switchToSignup()" class="signup-btn">Create New Account</button>
+    <div id="googleSignInButton"></div>
+  </div>
+</body>
+</html>

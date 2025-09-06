@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Eco-Friendly Marketplace</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4fcf7;
+      color: #2a2a2a;
+    }
+    header {
+      background: #40916c;
+      color: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      user-select: none;
+    }
+    nav a {
+      color: white;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      text-decoration: underline;
+      color: #d4f1be;
+    }
+    /* TOP CATEGORY MENU */
+    .category-bar {
+      background: #d8f3dc;
+      border-bottom: 1px solid #b7e4c7;
+      padding: 0.7rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+      overflow-x: auto;
+      display: flex;
+      justify-content: center;
+      scrollbar-width: thin;
+      scrollbar-color: #74b174 transparent;
+    }
+    .category-bar::-webkit-scrollbar {
+      height: 8px;
+    }
+    .category-bar::-webkit-scrollbar-thumb {
+      background-color: #74b174;
+      border-radius: 10px;
+    }
+    .category-bar button {
+      background: #52b788;
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      margin: 0 0.5rem;
+      padding: 0.5rem 1.2rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      font-size: 1rem;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .category-bar button:hover {
+      background: #40916c;
+      transform: scale(1.05);
+    }
+    /* MAIN GRID */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem 2.5rem 1rem;
+    }
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #40916c;
+      margin: 1.8rem 0 1rem 0;
+      user-select: none;
+      text-align: center;
+    }
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+    .category-tile {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      overflow: hidden;
+      text-align: center;
+      transition: box-shadow 0.2s, transform 0.2s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .category-tile:hover {
+      box-shadow: 0 8px 24px rgba(64,145,108,0.13);
+      transform: translateY(-4px);
+    }
+    .category-img {
+      width: 90%;
+      height: 120px;
+      object-fit: cover;
+      margin-top: 1rem;
+      border-radius: 8px;
+      background: #eef6f1;
+      user-select: none;
+    }
+    .category-name {
+      font-weight: bold;
+      color: #40916c;
+      margin: 1rem 0 0.5rem 0;
+      font-size: 1.07rem;
+      user-select: none;
+    }
+    .category-desc {
+      color: #666;
+      font-size: 0.98rem;
+      margin-bottom: 1rem;
+      padding: 0 10px;
+      user-select: none;
+    }
+    /* Responsive tweaks */
+    @media (max-width: 700px) {
+      .category-img {
+        height: 70px;
+      }
+      .category-tile {
+        min-width: 140px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">EcoFinds</div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+      <a href="/about">About</a>
+    </nav>
+  </header>
+  <!-- Sticky Category Bar -->
+  <div class="category-bar" id="categoryBar"></div>
+  <main>
+    <div class="section-title">Shop by Category</div>
+    <section class="category-grid" id="categoryGrid"></section>
+  </main>
+  <script>
+    const categories = [
+      {
+        name: "Fashion Accessories",
+        image: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d5e?auto=format&fit=crop&w=400&q=80",
+        desc: "Eco-friendly fashion accessories to complete your style."
+      },
+      {
+        name: "Home for Living",
+        image: "https://images.unsplash.com/photo-1524253482453-3fed8d2fe12b?auto=format&fit=crop&w=400&q=80",
+        desc: "Sustainable products to beautify your living spaces."
+      },
+      {
+        name: "Tech for Gadgets",
+        image: "https://images.unsplash.com/photo-1518773553398-650c184e0bb3?auto=format&fit=crop&w=400&q=80",
+        desc: "Energy-efficient and sustainable technology gadgets."
+      },
+      {
+        name: "Personal Care",
+        image: "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=400&q=80",
+        desc: "Natural and eco-friendly products for personal wellness."
+      },
+      {
+        name: "Kids",
+        image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=400&q=80",
+        desc: "Sustainable and safe kids’ lifestyle products."
+      },
+      {
+        name: "Lifestyle",
+        image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
+        desc: "Eco-conscious choices for everyday living."
+      }
+    ];
+    function loadCategoryBar() {
+      const bar = document.getElementById('categoryBar');
+      bar.innerHTML = '';
+      categories.forEach((cat, idx) => {
+        const btn = document.createElement('button');
+        btn.textContent = cat.name;
+        btn.onclick = () => scrollToCategory(idx);
+        bar.appendChild(btn);
+      });
+    }
+    function loadCategoryGrid() {
+      const grid = document.getElementById('categoryGrid');
+      grid.innerHTML = '';
+      categories.forEach((cat, idx) => {
+        const tile = document.createElement('div');
+        tile.className = 'category-tile';
+        tile.id = `category-${idx}`;
+        tile.innerHTML = `
+          <img src="${cat.image}" alt="${cat.name}" class="category-img"/>
+          <div class="category-name">${cat.name}</div>
+          <div class="category-desc">${cat.desc}</div>
+        `;
+        tile.onclick = () => alert(`Showing products for: ${cat.name}`);
+        grid.appendChild(tile);
+      });
+    }
+    function scrollToCategory(index) {
+      const el = document.getElementById(`category-${index}`);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    // Initialize
+    loadCategoryBar();
+    loadCategoryGrid();
+  </script>
+</body>
+</html>
