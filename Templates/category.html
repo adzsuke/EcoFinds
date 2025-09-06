@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EcoFinds</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; background: #f4fcf7; color: #2a2a2a;
+    }
+    header {
+      background: #40916c; color: #fff; padding: 1rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    }
+    .logo { font-size: 1.8rem; font-weight: bold; user-select: none; cursor: pointer; }
+    nav a {
+      color: white; margin-left: 1rem; text-decoration: none;
+      font-weight: 600; font-size: 1rem; cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    nav a:hover { text-decoration: underline; color: #d4f1be; }
+
+    main { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+    h2 { text-align: center; color: #40916c; margin-bottom: 1rem; }
+
+    /* Category grid */
+    .category-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+    }
+    .category-tile {
+      background: white; border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      overflow: hidden; text-align: center; cursor: pointer;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+      padding-bottom: 1rem;
+    }
+    .category-tile:hover {
+      box-shadow: 0 8px 24px rgba(64,145,108,0.2);
+      transform: translateY(-5px);
+    }
+    .category-img {
+      width: 100%; height: 140px; object-fit: cover;
+      border-bottom: 2px solid #40916c;
+    }
+    .category-name {
+      font-weight: bold; color: #40916c; font-size: 1.2rem;
+      margin: 1rem 0 0.5rem 0;
+    }
+    .category-desc { color: #666; font-size: 1rem; padding: 0 1rem; }
+
+    /* Product grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+    .product-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: box-shadow 0.25s ease, transform 0.2s ease;
+      text-align: center;
+      padding: 1rem;
+    }
+    .product-card:hover {
+      box-shadow: 0 9px 30px rgba(38,148,83,0.3);
+      transform: translateY(-5px);
+    }
+    .product-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .product-name {
+      margin-top: 0.8rem;
+      font-weight: 700;
+      color: #2a7f62;
+    }
+
+    /* Back link */
+    .back-link {
+      display: block;
+      margin-bottom: 1.5rem;
+      color: #40916c;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+      width: fit-content;
+      text-align: center;
+    }
+    .back-link:hover { color: #2a7f62; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo" onclick="showCategories()">EcoFinds</div>
+    <nav>
+      <a onclick="showCategories()">Home</a>
+      <a href="#">Login</a>
+      <a href="#">Profile</a>
+    </nav>
+  </header>
+  <main>
+    <h2 id="pageTitle">Shop by Category</h2>
+    <div id="backLink" class="back-link" style="display:none;" onclick="showCategories()">← Back to Categories</div>
+    <div id="contentGrid" class="category-grid"></div>
+  </main>
+
+  <script>
+    const categories = [
+      {
+        name: "Fashion Accessories",
+        desc: "Eco-friendly fashion accessories to complete your style.",
+        image: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d5e?auto=format&fit=crop&w=400&q=80",
+        products: [
+          {name: "Recycled Sunglasses", image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"},
+          {name: "Eco Tote Bag", image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80"}
+        ]
+      },
+      {
+        name: "Home for Living",
+        desc: "Sustainable products to beautify your living spaces.",
+        image: "https://images.unsplash.com/photo-1524253482453-3fed8d2fe12b?auto=format&fit=crop&w=400&q=80",
+        products: [
+          {name: "Organic Bed Linen", image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80"},
+          {name: "Recycled Storage Box", image: "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=400&q=80"}
+        ]
+      },
+      {
+        name: "Tech for Gadgets",
+        desc: "Energy-efficient and sustainable tech gadgets.",
+        image: "https://images.unsplash.com/photo-1518773553398-650c184e0bb3?auto=format&fit=crop&w=400&q=80",
+        products: [
+          {name: "Solar Charger", image: "https://images.unsplash.com/photo-1486308510493-c6e53b5d03aa?auto=format&fit=crop&w=400&q=80"},
+          {name: "Eco Wireless Earbuds", image: "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=400&q=80"}
+        ]
+      },
+      {
+        name: "Personal Care",
+        desc: "Natural and eco-friendly personal care products.",
+        image: "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=400&q=80",
+        products: [
+          {name: "Organic Shampoo", image: "https://images.unsplash.com/photo-1512427691650-819bf10d68b4?auto=format&fit=crop&w=400&q=80"},
+          {name: "Bamboo Toothbrush", image: "https://images.unsplash.com/photo-1512207847959-d58b536721ba?auto=format&fit=crop&w=400&q=80"}
+        ]
+      },
+      {
+        name: "Kids Accessories",
+        desc: "Safe and sustainable products for kids.",
+        image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=400&q=80",
+        products: [
+          {name: "Organic Cotton Onesie", image: "https://images.unsplash.com/photo-1542730987-4e99f37427a2?auto=format&fit=crop&w=400&q=80"},
+          {name: "Bamboo Toys", image: "https://images.unsplash.com/photo-1543703504-8da6e287fa68?auto=format&fit=crop&w=400&q=80"}
+        ]
+      },
+      {
+        name: "Lifestyle",
+        desc: "Eco-conscious choices for everyday living.",
+        image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
+        products: [
+          {name: "Reusable Water Bottle", image: "https://images.unsplash.com/photo-1526403221913-3360a9f2a1f6?auto=format&fit=crop&w=400&q=80"},
+          {name: "Organic Cotton Tote", image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80"}
+        ]
+      },
+      {
+        name: "Books & Stationery",
+        desc: "Sustainable books and stationery.",
+        image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=400&q=80",
+        products: [
+          {name: "Eco Notebook", image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=400&q=80"},
+          {name: "Recycled Pens", image: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=400&q=80"}
+        ]
+      },
+      {
+        name: "Outdoor & Garden",
+        desc: "Sustainable outdoor and garden products.",
+        image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=400&q=80",
+        products: [
+          {name: "Solar Garden Light", image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=400&q=80"},
+          {name: "Natural Compost", image: "https://images.unsplash.com/photo-1462899006636-339e08d1844e?auto=format&fit=crop&w=400&q=80"}
+        ]
+      }
+    ];
+
+    const pageTitle = document.getElementById('pageTitle');
+    const backLink = document.getElementById('backLink');
+    const contentGrid = document.getElementById('contentGrid');
+
+    function showCategories() {
+      pageTitle.textContent = "Shop by Category";
+      backLink.style.display = "none";
+      contentGrid.className = "category-grid";
+
+      contentGrid.innerHTML = "";
+      categories.forEach(cat => {
+        const tile = document.createElement('div');
+        tile.className = 'category-tile';
+        tile.innerHTML = `
+          <img src="${cat.image}" alt="${cat.name}" class="category-img" />
+          <div class="category-name">${cat.name}</div>
+          <div class="category-desc">${cat.desc}</div>
+        `;
+        tile.onclick = () => showProducts(cat.name);
+        contentGrid.appendChild(tile);
+      });
+    }
+
+    function showProducts(categoryName) {
+      const category = categories.find(cat => cat.name === categoryName);
+      if (!category) return;
+
+      pageTitle.textContent = category.name;
+      backLink.style.display = "block";
+      contentGrid.className = "product-grid";
+
+      contentGrid.innerHTML = category.products.map(product => `
+        <div class="product-card" title="${product.name}">
+          <img src="${product.image}" alt="${product.name}" class="product-img" />
+          <div class="product-name">${product.name}</div>
+        </div>
+      `).join('');
+    }
+
+    // Load categories on start
+    document.addEventListener('DOMContentLoaded', showCategories);
+  </script>
+</body>
+</html>

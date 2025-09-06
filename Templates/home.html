@@ -10,92 +10,104 @@
       margin: 0;
       background: #f4fcf7;
       color: #2a2a2a;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
+    /* Navbar Styles */
     header {
       background: #40916c;
       color: #fff;
       padding: 1rem 2rem;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
     }
     .logo {
       font-size: 1.8rem;
-      font-weight: bold;
+      font-weight: 700;
       user-select: none;
+      white-space: nowrap;
+      color: #fff;
+      text-decoration: none;
     }
     nav a {
-      color: white;
-      margin-left: 1rem;
-      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
       font-weight: 600;
       font-size: 1rem;
+      color: #fff;
+      background-color: transparent;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      text-decoration: none;
       cursor: pointer;
-      transition: color 0.3s ease;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+      user-select: none;
+      white-space: nowrap;
+      box-sizing: border-box;
     }
-    nav a:hover {
-      text-decoration: underline;
+    nav a:hover,
+    nav a:focus {
+      background-color: #367c59;
+      border-color: #2f6e4d;
       color: #d4f1be;
+      text-decoration: none;
+      outline: none;
     }
-    /* TOP CATEGORY MENU */
-    .category-bar {
+    .search-bar {
+      padding: 6px 12px;
+      border-radius: 20px;
+      border: 2px solid #d4f1be;
+      font-size: 1rem;
+      outline: none;
+      width: 320px;
+      user-select: text;
+      color: #000;
+    }
+    .search-bar:focus {
+      border-color: #2e7d32;
+      box-shadow: 0 0 5px rgba(46,125,50,0.5);
+    }
+
+    /* Second Navbar with categories heading and grid */
+    .second-navbar {
       background: #d8f3dc;
       border-bottom: 1px solid #b7e4c7;
-      padding: 0.7rem 0;
+      color: #40916c;
+      font-style: normal;
+      font-weight: 600;
+      padding: 0.75rem 1rem 1.5rem 1rem;
+      text-align: center;
+      user-select: none;
       position: sticky;
       top: 0;
       z-index: 100;
       box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-      overflow-x: auto;
+      font-family: 'Georgia', serif;
+      letter-spacing: 0.7px;
       display: flex;
-      justify-content: center;
-      scrollbar-width: thin;
-      scrollbar-color: #74b174 transparent;
+      flex-direction: column;
+      align-items: center;
     }
-    .category-bar::-webkit-scrollbar {
-      height: 8px;
-    }
-    .category-bar::-webkit-scrollbar-thumb {
-      background-color: #74b174;
-      border-radius: 10px;
-    }
-    .category-bar button {
-      background: #52b788;
-      border: none;
-      color: #fff;
-      font-weight: 600;
-      margin: 0 0.5rem;
-      padding: 0.5rem 1.2rem;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
-      font-size: 1rem;
-      white-space: nowrap;
-      user-select: none;
-    }
-    .category-bar button:hover {
-      background: #40916c;
-      transform: scale(1.05);
-    }
-    /* MAIN GRID */
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem 1rem 2.5rem 1rem;
-    }
-    .section-title {
-      font-size: 1.4rem;
+    .second-navbar h2 {
+      margin: 0 0 1rem 0;
       font-weight: bold;
-      color: #40916c;
-      margin: 1.8rem 0 1rem 0;
-      user-select: none;
-      text-align: center;
+      font-size: 1.5rem;
     }
     .category-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem 2rem;
+      width: 100%;
+      max-width: 1200px;
     }
     .category-tile {
       background: #fff;
@@ -108,6 +120,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      padding: 0 5px;
+      box-sizing: border-box;
     }
     .category-tile:hover {
       box-shadow: 0 8px 24px rgba(64,145,108,0.13);
@@ -136,98 +150,87 @@
       padding: 0 10px;
       user-select: none;
     }
-    /* Responsive tweaks */
+    main {
+      flex-grow: 1;
+      margin: 2rem auto 3rem auto;
+      width: 100%;
+      max-width: 1200px;
+    }
+    @media (max-width: 1100px) {
+      .category-grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+    }
     @media (max-width: 700px) {
       .category-img {
         height: 70px;
       }
       .category-tile {
         min-width: 140px;
+        padding: 0 8px;
+      }
+      .search-bar {
+        width: 200px;
+      }
+      .second-navbar h2 {
+        font-size: 1.3rem;
+        margin-bottom: 0.75rem;
       }
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="logo">EcoFinds</div>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/login">Login</a>
-      <a href="/about">About</a>
-    </nav>
+    <div class="header-left">
+      <div class="logo">EcoFinds</div>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/login">Login</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+      </nav>
+    </div>
+    <input type="search" class="search-bar" placeholder="Search EcoFinds" aria-label="Search" />
   </header>
-  <!-- Sticky Category Bar -->
-  <div class="category-bar" id="categoryBar"></div>
-  <main>
-    <div class="section-title">Shop by Category</div>
+
+  <div class="second-navbar">
+    <h2>Shop by Category</h2>
     <section class="category-grid" id="categoryGrid"></section>
+  </div>
+
+  <main>
+    <!-- Additional content can go here -->
   </main>
+
   <script>
-    const categories = [
-      {
-        name: "Fashion Accessories",
-        image: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d5e?auto=format&fit=crop&w=400&q=80",
-        desc: "Eco-friendly fashion accessories to complete your style."
-      },
-      {
-        name: "Home for Living",
-        image: "https://images.unsplash.com/photo-1524253482453-3fed8d2fe12b?auto=format&fit=crop&w=400&q=80",
-        desc: "Sustainable products to beautify your living spaces."
-      },
-      {
-        name: "Tech for Gadgets",
-        image: "https://images.unsplash.com/photo-1518773553398-650c184e0bb3?auto=format&fit=crop&w=400&q=80",
-        desc: "Energy-efficient and sustainable technology gadgets."
-      },
-      {
-        name: "Personal Care",
-        image: "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=400&q=80",
-        desc: "Natural and eco-friendly products for personal wellness."
-      },
-      {
-        name: "Kids",
-        image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=400&q=80",
-        desc: "Sustainable and safe kids’ lifestyle products."
-      },
-      {
-        name: "Lifestyle",
-        image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
-        desc: "Eco-conscious choices for everyday living."
-      }
-    ];
-    function loadCategoryBar() {
-      const bar = document.getElementById('categoryBar');
-      bar.innerHTML = '';
-      categories.forEach((cat, idx) => {
-        const btn = document.createElement('button');
-        btn.textContent = cat.name;
-        btn.onclick = () => scrollToCategory(idx);
-        bar.appendChild(btn);
-      });
-    }
-    function loadCategoryGrid() {
+    document.addEventListener('DOMContentLoaded', () => {
+      const categories = [
+        { name: "Fashion Accessories", image: "https://img.freepik.com/premium-photo/photographs-fashion-accessories_883586-41792.jpg", desc: "Eco-friendly fashion accessories to complete your style." },
+        { name: "Home for Living", image: "https://www.lampsplus.com/images/landing-pages/home-decor/0921-home-decor-splash-bkgd.jpg", desc: "Sustainable products to beautify your living spaces." },
+        { name: "Tech for Gadgets", image: "https://images.unsplash.com/photo-1518773553398-650c184e0bb3?auto=format&fit=crop&w=400&q=80", desc: "Energy-efficient and sustainable technology gadgets." },
+        { name: "Personal Care", image: "https://vivecosmetic.com/wp-content/uploads/2021/04/Personal-Care-Products-Manufacturers.jpg", desc: "Natural and eco-friendly products for personal wellness." },
+        { name: "Kids Accessories", image: "https://haniffa.com.sg/wp-content/uploads/2021/01/Kids-Accessories3.jpg", desc: "Safe and sustainable products for kids." },
+        { name: "Lifestyle", image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80", desc: "Eco-conscious choices for everyday living." },
+        { name: "Books & Stationery", image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=400&q=80", desc: "Sustainable books and stationery." },
+        { name: "Outdoor & Garden", image: "https://nextluxury.com/wp-content/uploads/landscaped-flower-garden-ideas-6.jpg", desc: "Sustainable outdoor and garden products." }
+      ];
+
       const grid = document.getElementById('categoryGrid');
-      grid.innerHTML = '';
-      categories.forEach((cat, idx) => {
+      categories.forEach(cat => {
         const tile = document.createElement('div');
         tile.className = 'category-tile';
-        tile.id = `category-${idx}`;
         tile.innerHTML = `
-          <img src="${cat.image}" alt="${cat.name}" class="category-img"/>
+          <img src="${cat.image}" alt="${cat.name}" class="category-img" />
           <div class="category-name">${cat.name}</div>
           <div class="category-desc">${cat.desc}</div>
         `;
-        tile.onclick = () => alert(`Showing products for: ${cat.name}`);
+        tile.onclick = () => {
+          const urlCategory = encodeURIComponent(cat.name);
+          window.location.href = `category.html?category=${urlCategory}`;
+        };
         grid.appendChild(tile);
       });
-    }
-    function scrollToCategory(index) {
-      const el = document.getElementById(`category-${index}`);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-    // Initialize
-    loadCategoryBar();
-    loadCategoryGrid();
+    });
   </script>
 </body>
 </html>
